@@ -8,11 +8,7 @@
  * Copyright 2017
 **/
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
-//#include <assert.h>
-#include "rule30.h"
+#include "eca.h"
 
 inline static void eca_0(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
 {
