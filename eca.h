@@ -18,4 +18,6 @@ struct bitfield *eca_string(const struct bitfield *input, const unsigned int wol
 
 void eca_ring_ip(struct bitfield *instance, const unsigned int wolfram_code);	/* treats the input array of bits as a ring and transforms it as an elementary cellular automaton given by Wolfram's code "in-place" */
 
+struct bitfield *eca_ring(const struct bitfield *input, const unsigned int wolfram_code);	/* treats the input array of bits as a ring and transforms it as an elementary cellular automaton given by Wolfram's code */
+
 #endif

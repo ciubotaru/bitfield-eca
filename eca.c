@@ -3364,3 +3364,14 @@ void eca_ring_ip(struct bitfield *instance, const unsigned int wolfram_code)
 	bfdel(center);
 	bfdel(right);
 }
+
+struct bitfield *eca_ring(const struct bitfield *input, const unsigned int wolfram_code)
+{
+	int input_size = bfsize(input);
+	struct bitfield *left = bfshift(input, -1);
+	struct bitfield *right = bfshift(input, 1);
+//	struct bitfield *center = bfclone(input);
+	struct bitfield *output = bfnew_quick(input_size);
+	eca[wolfram_code](left, input, right, output);
+	return output;
+}
