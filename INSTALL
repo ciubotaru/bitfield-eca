@@ -7,12 +7,18 @@ $ autoconf
 $ ./configure --prefix=DIRECTORY
 $ make
 
-This will build both a static and a shared version. To build just one of them, 
-replace "make" with "make static" or "make shared".
+The only compile-time and run-time dependency is Vitalie Ciubotaru's 'bitfield'
+library (at least version 0.6.*). If bitfield is not installed, or if the
+sources were configured with the '--with-local-bitfield' flag, make will assume
+that the source code of bitfield is available in the source tree (in 'bitfield'
+directory) and will attempt to build it first.
 
-To test the compiled library:
+`make` builds a shared and a static library. For a shared or a static library
+only, do `make shared` or `make static`.
 
-$ make check
+`make check` or `make test` runs some tests agains the newly-built library.
+
+`make examples` runs some examples with graphical output.
 
 The generic way to install the compiled files is:
 

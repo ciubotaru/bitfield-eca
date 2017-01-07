@@ -40,13 +40,13 @@ bitfield:
 
 shared: libbitfield-eca.so.$(VERSION)
 libbitfield-eca.so.$(VERSION): eca.c
-	$(CC) $(CFLAGS) -c -fpic eca.c -o eca-shared.o -I. $(BITFIELD_INC)
-	$(CC) $(CFLAGS) -shared -Wl,-soname,libbitfield-eca.so.0 -o libbitfield-eca.so.$(VERSION) eca-shared.o -I. $(BITFIELD_LIB) $(BITFIELD_INC) -lbitfield
+	$(CC) $(CFLAGS) -c -fpic eca.c -o eca-shared.o $(BITFIELD_INC) -I.
+	$(CC) $(CFLAGS) -shared -Wl,-soname,libbitfield-eca.so.0 -o libbitfield-eca.so.$(VERSION) eca-shared.o $(BITFIELD_LIB) $(BITFIELD_INC) -I. -lbitfield
 	for i in libbitfield-eca.so.0 libbitfield-eca.so; do ln -svf libbitfield-eca.so.$(VERSION) $$i; done
 
 static: libbitfield-eca.a
 libbitfield-eca.a: eca.c
-	$(CC) $(CFLAGS) -c eca.c -o eca-static.o -I. $(BITFIELD_INC)
+	$(CC) $(CFLAGS) -c eca.c -o eca-static.o $(BITFIELD_INC) -I.
 	@if [ $(HAVE_BITFIELD) -eq 0 ]; then \
 	$(AR) rcs libbitfield-eca.a eca-static.o bitfield/bf-static.o; \
 	else \

@@ -30,21 +30,7 @@ One-Dimensional Cellular Automata, Journal of Cellular Automata. 2007, Vol. 2 Is
 Installation
 ------------
 
-To compile bitfield-eca from source code:
-
-    $ autoconf
-    $ ./configure --prefix=DIRECTORY
-    $ make
-
-The only compile-time and run-time dependency is Vitalie Ciubotaru's 'bitfield' 
-library (version 0.4.*). If bitfield is not installed, or if the sources were 
-configured with the '--with-local-bitfield' flag, make will assume that the 
-source code of bitfield is available in the source tree (in 'bitfield' 
-directory) and will attempt to build it first.
-
-`make` builds a shared and a static library. For a shared or a static library only, do `make shared` or `make static`.
-`make check` runs some tests agains the newly-built library.
-`make examples` runs some examples with graphical output.
+Please see the file called INSTALL.
 
 Usage
 -----
