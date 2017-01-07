@@ -1,4 +1,4 @@
-TESTFILES=test1 test2
+TESTFILES=test1 test2 test3 test4
 HAVE_BITFIELD = @HAVE_BITFIELD@
 ifeq ($(HAVE_BITFIELD), 0)
 BITFIELD_LIB = -L../bitfield
