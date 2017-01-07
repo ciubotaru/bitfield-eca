@@ -2739,9 +2739,9 @@ static void (*eca[256])() = {
 void eca_string_ip(struct bitfield *instance, const unsigned int wolfram_code)
 {
 	int size = bfsize(instance);
-	struct bitfield *left = bfsub(instance, 0, size - 2);
+	struct bitfield *left = bfsub(instance, 2, size);
 	struct bitfield *center = bfsub(instance, 1, size - 1);
-	struct bitfield *right = bfsub(instance, 2, size);
+	struct bitfield *right = bfsub(instance, 0, size - 2);
 	bfresize(instance, size - 2);
 	eca[wolfram_code](left, center, right, instance);
 	bfdel(left);
@@ -2754,9 +2754,9 @@ void eca_string_ip(struct bitfield *instance, const unsigned int wolfram_code)
 struct bitfield *eca_string(const struct bitfield *input, const unsigned int wolfram_code)
 {
 	int input_size = bfsize(input);
-	struct bitfield *left = bfsub(input, 0, input_size - 2);
+	struct bitfield *left = bfsub(input, 2, input_size);
 	struct bitfield *center = bfsub(input, 1, input_size - 1);
-	struct bitfield *right = bfsub(input, 2, input_size);
+	struct bitfield *right = bfsub(input, 0, input_size - 2);
 	struct bitfield *output = bfnew_quick(input_size - 2);
 	eca[wolfram_code](left, center, right, output);
 	return output;
