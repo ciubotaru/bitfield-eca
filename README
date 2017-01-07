@@ -1,0 +1,77 @@
+bitfield-eca
+============
+
+Version 0.0.1 (January 7, 2017)
+
+eca is a collection of algorithms that implement Elementary Cellular Automata.
+
+Algorithms
+----------
+
+Elementary Cellular Automaton is a one-dimensional two-state CA, where the state 
+of a cell in the next generation depends only on the current state of the cell 
+and its two immediate neighbors. The state of each cell is represented by one bit in a bit array. The rule of transformation is represented by "Wolfram code".
+
+An important convention is that bits are numbered and showed from right to left. This means that bit 0 is the rightmost.
+
+Example: Rule 30
+
+|       current state       | 111 | 110 | 101 | 100 | 011 | 010 | 001 | 000 |
++---------------------------+-----+-----+-----+-----+-----+-----+-----+-----+
+| new state for center cell |  0  |  0  |  0  |  1  |  1  |  1  |  1  |  0  |
+
+center' = left XOR [ center OR right ]
+
+The boolean formulae are taken from:
+  * Stephen Wolfram, A New Kind of Science, p. 884
+  * Evangelos Georgiadis, A Note on Minimal Boolean Formula Size of 
+One-Dimensional Cellular Automata, Journal of Cellular Automata. 2007, Vol. 2 Issue 4, p. 353
+
+Installation
+------------
+
+Please see the file called INSTALL.
+
+Usage
+-----
+
+THe 'bitfield-eca' library is an extension to the 'bitfield' library, so in most cases, functions provided by eca are used along with functions from the core.
+If bitfield-eca library files are installed system-wide in standard locations, then one needs to (1) include a system version of the header file to the source
+
+#include <bitfield-eca.h>
+
+and (2) add the "-lbitfield-eca -lbitfield" flags to compiler instructions
+
+gcc ... -lbitfield-eca -lbitfield
+
+Alternatively, if bitfield-eca library is integrated into a project, then one needs to (1) include a local version of the header file to the source
+
+#include "PATH_TO_HEADER/bitfield-eca.h"
+
+and (2) add the "-lbitfield-eca -lbitfield" flags, along with the path to the header and path to the library to compiler instructions
+
+gcc ... -I$(PATH_TO_HEADER) -L$(PATH_TO_LIBRARY) -lbitfield-eca -lbitfield
+
+Functions
+---------
+For function syntax, see "eca.h". For details on every function, see
+its manual page.
+
+eca_string() transforms an array of bits by a corresponding Wolfram's rule.
+
+eca_string_ip() transforms an array of bits "in-place".
+
+eca_ring() treats the input array of bits as a ring and transforms it
+by a corresponding Wolfram's rule.
+
+eca_ring_ip() treats the input array of bits as a ring and transforms
+it "in-place".
+
+Please, see "examples" directory for working examples.
+
+Licensing
+---------
+
+bitfield-eca is free software, and is released under the terms of the GNU General 
+Public License version 3 or any later version. Please see the file called 
+LICENSE.

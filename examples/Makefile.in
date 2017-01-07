@@ -1,0 +1,27 @@
+EXAMPLES=rule30
+LIBS=-L.. -I..
+HAVE_BITFIELD=@HAVE_BITFIELD@
+ifeq ($(HAVE_BITFIELD), 0)
+BITFIELD_LIB = -L../bitfield -I../bitfield
+LD_LIBRARY_PATH := $(shell pwd)/../bitfield:$(LD_LIBRARY_PATH)
+else
+BITFIELD_LIB =
+endif
+
+all: build-examples run-examples
+build-examples: $(EXAMPLES)
+$(EXAMPLES): %: %.c
+	$(CC) $(CFLAGS) -Wl,-rpath=$(CURDIR) -o $@ $< $(LIBS) -lbitfield-eca $(BITFIELD_LIB) -lbitfield
+
+run-examples:
+	for i in $(EXAMPLES); do \
+	./$$i; \
+	done
+clean:
+	rm -rvf *.a *.o *.so*
+	rm -rvf $(EXAMPLES)
+
+distclean:
+	rm Makefile
+
+.PHONY: build-examples run-examples clean distclean
