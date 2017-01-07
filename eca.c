@@ -3343,8 +3343,6 @@ void eca_string_ip(struct bitfield *instance, const unsigned int wolfram_code)
 	bfdel(right);
 }
 
-
-
 struct bitfield *eca_string(const struct bitfield *input, const unsigned int wolfram_code)
 {
 	int input_size = bfsize(input);
@@ -3356,3 +3354,13 @@ struct bitfield *eca_string(const struct bitfield *input, const unsigned int wol
 	return output;
 }
 
+void eca_ring_ip(struct bitfield *instance, const unsigned int wolfram_code)
+{
+	struct bitfield *left = bfshift(instance, -1);
+	struct bitfield *right = bfshift(instance, 1);
+	struct bitfield *center = bfclone(instance);
+	eca[wolfram_code](left, center, right, instance);
+	bfdel(left);
+	bfdel(center);
+	bfdel(right);
+}

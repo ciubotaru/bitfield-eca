@@ -16,4 +16,6 @@ void eca_string_ip(struct bitfield *instance, const unsigned int wolfram_code);	
 
 struct bitfield *eca_string(const struct bitfield *input, const unsigned int wolfram_code);	/* transforms an array of bits as an elementary cellular automaton given by Wolfram's code */
 
+void eca_ring_ip(struct bitfield *instance, const unsigned int wolfram_code);	/* treats the input array of bits as a ring and transforms it as an elementary cellular automaton given by Wolfram's code "in-place" */
+
 #endif
