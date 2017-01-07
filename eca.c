@@ -10,3064 +10,2818 @@
 
 #include "eca.h"
 
-inline static void eca_0(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_0(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
-	bfclearall(output);
+	int input_size = bfsize(left);
+	struct bitfield *output = bfnew(input_size);
+	return output;
 }
 
-inline static void eca_1(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_1(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_2(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_2(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfand(right, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(right, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_3(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_3(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(left, center);
-	struct bitfield *tmp2 = bfnot(tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfnot(tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_4(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_4(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(left, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfand(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_5(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_5(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(left, right);
-	struct bitfield *tmp2 = bfnot(tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfnot(tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_6(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_6(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfxor(center, right);
-	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_7(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_7(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(center, right);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_8(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_8(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfand(tmp1, center);
-	struct bitfield *tmp3 = bfand(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_9(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_9(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfxor(center, right);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_10(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_10(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(left);
-	struct bitfield *tmp2 = bfand(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_11(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_11(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfor(left, tmp1);
 	struct bitfield *tmp3 = bfor(tmp2, right);
-	struct bitfield *tmp4 = bfxor(left, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(left, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_12(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_12(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, center);
-	struct bitfield *tmp2 = bfxor(tmp1, center);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(tmp1, center);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_13(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_13(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfor(center, tmp1);
 	struct bitfield *tmp3 = bfor(left, tmp2);
-	struct bitfield *tmp4 = bfxor(left, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(left, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_14(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_14(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_15(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_15(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
-	struct bitfield *tmp1 = bfnot(left);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfnot(left);
+	return output;
 }
 
-inline static void eca_16(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_16(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(center, right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_17(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_17(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(center, right);
-	struct bitfield *tmp2 = bfnot(tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfnot(tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_18(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_18(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfnot(center);
-	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_19(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_19(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfor(tmp1, center);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_20(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_20(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfnot(right);
-	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_21(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_21(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_22(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_22(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfxor(center, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfxor(left, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(left, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_23(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_23(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
 	struct bitfield *tmp3 = bfxor(center, right);
 	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	struct bitfield *tmp5 = bfxor(left, tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(left, tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_24(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_24(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(left, right);
-	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_25(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_25(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfxor(center, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_26(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_26(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_27(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_27(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
 	struct bitfield *tmp3 = bfor(tmp2, right);
-	struct bitfield *tmp4 = bfxor(left, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(left, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_28(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_28(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfor(tmp1, center);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_29(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_29(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
 	struct bitfield *tmp3 = bfor(tmp2, center);
-	struct bitfield *tmp4 = bfxor(left, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(left, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_30(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_30(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(center, right);
-	struct bitfield *tmp2 = bfxor(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_31(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_31(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(center, right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_32(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_32(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfand(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_33(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_33(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfor(center, tmp1);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_34(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_34(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(center);
-	struct bitfield *tmp2 = bfand(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_35(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_35(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfor(tmp1, center);
 	struct bitfield *tmp3 = bfor(tmp2, right);
-	struct bitfield *tmp4 = bfxor(tmp3, center);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_36(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_36(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(center, right);
-	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_37(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_37(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(center, right);
 	struct bitfield *tmp2 = bfxor(left, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_38(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_38(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_39(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_39(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
 	struct bitfield *tmp3 = bfor(tmp2, right);
-	struct bitfield *tmp4 = bfxor(tmp3, center);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_40(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_40(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfxor(left, center);
-	struct bitfield *tmp2 = bfand(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_41(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_41(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfxor(left, center);
 	struct bitfield *tmp3 = bfxor(tmp2, right);
 	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	struct bitfield *tmp5 = bfnot(tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfnot(tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_42(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_42(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_43(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_43(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfnot(center);
 	struct bitfield *tmp3 = bfxor(left, tmp2);
 	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	struct bitfield *tmp5 = bfxor(left, tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(left, tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_44(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_44(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(center, right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_45(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_45(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfor(center, tmp1);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_46(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_46(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(center, right);
-	struct bitfield *tmp3 = bfxor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_47(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_47(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfnot(center);
 	struct bitfield *tmp3 = bfand(tmp2, right);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_48(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_48(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(center);
-	struct bitfield *tmp2 = bfand(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_49(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_49(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfor(left, center);
 	struct bitfield *tmp3 = bfor(tmp2, tmp1);
-	struct bitfield *tmp4 = bfxor(tmp3, center);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_50(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_50(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_51(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_51(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
-	struct bitfield *tmp1 = bfnot(center);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfnot(center);
+	return output;
 }
 
-inline static void eca_52(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_52(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfand(center, right);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_53(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_53(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfxor(center, tmp1);
 	struct bitfield *tmp3 = bfor(left, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, center);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_54(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_54(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(left, right);
-	struct bitfield *tmp2 = bfxor(tmp1, center);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(tmp1, center);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_55(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
-{
-	struct bitfield *tmp1 = bfor(left, right);
-	struct bitfield *tmp2 = bfand(tmp1, center);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
-	bfdel(tmp1);
-	bfdel(tmp2);
-	bfdel(tmp3);
-}
-
-inline static void eca_56(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_55(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfor(left, right);
 	struct bitfield *tmp2 = bfand(tmp1, center);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_57(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_56(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
+{
+	struct bitfield *tmp1 = bfor(left, right);
+	struct bitfield *tmp2 = bfand(tmp1, center);
+	struct bitfield *output = bfxor(left, tmp2);
+	bfdel(tmp1);
+	bfdel(tmp2);
+	return output;
+}
+
+inline static struct bitfield *eca_57(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_58(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_58(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfxor(center, right);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_59(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_59(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfand(tmp1, right);
 	struct bitfield *tmp3 = bfnot(center);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_60(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_60(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
-	struct bitfield *tmp1 = bfxor(left, center);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfxor(left, center);
+	return output;
 }
 
-inline static void eca_61(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_61(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 OR 3)) OR (1 XOR 2) */
 	struct bitfield *tmp1 = bfor(left, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
 	struct bitfield *tmp3 = bfxor(left, center);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_62(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_62(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) XOR (1 OR 2 OR 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(left, center);
 	struct bitfield *tmp3 = bfor(tmp2, right);
-	struct bitfield *tmp4 = bfxor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_63(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_63(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT (1 AND 2) */
 	struct bitfield *tmp1 = bfand(left, center);
-	struct bitfield *tmp2 = bfnot(tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfnot(tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_64(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_64(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND 2 AND (NOT 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfnot(right);
-	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_65(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_65(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 XOR 2) OR 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_66(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_66(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 3) AND (2 XOR 3) */
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfxor(center, right);
-	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_67(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_67(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 AND 3) OR (1 XOR 2)) */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfxor(left, center);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_68(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_68(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 2 AND (NOT 3) */
 	struct bitfield *tmp1 = bfnot(right);
-	struct bitfield *tmp2 = bfand(center, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(center, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_69(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_69(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) OR 2 OR 3) XOR 3 */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfor(tmp1, center);
 	struct bitfield *tmp3 = bfor(tmp2, right);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_70(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_70(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((1 AND 3) OR 2) XOR 3 */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfor(tmp1, center);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_71(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_71(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR (NOT 3) OR 2) XOR 3 */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
 	struct bitfield *tmp3 = bfor(tmp2, center);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_72(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_72(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 2 AND (1 XOR 3) */
 	struct bitfield *tmp1 = bfxor(left, right);
-	struct bitfield *tmp2 = bfand(center, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(center, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_73(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_73(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 AND 3) OR (1 XOR 2 XOR 3)) */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfxor(left, center);
 	struct bitfield *tmp3 = bfxor(tmp2, right);
 	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	struct bitfield *tmp5 = bfnot(tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfnot(tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_74(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_74(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND (2 OR 3)) XOR 3 */
 	struct bitfield *tmp1 = bfor(center, right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_75(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_75(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((NOT 2) OR 3 */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_76(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_76(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2 AND 3) XOR 2 */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_77(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_77(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((1 XOR 2) OR (1 XOR (NOT 3))) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfnot(right);
 	struct bitfield *tmp3 = bfxor(left, tmp2);
 	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	struct bitfield *tmp5 = bfxor(left, tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(left, tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_78(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_78(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((1 XOR 2) OR 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_79(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_79(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT 1) OR (2 AND (NOT 3)) */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfnot(right);
 	struct bitfield *tmp3 = bfand(center, tmp2);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_80(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_80(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND (NOT 3) */
 	struct bitfield *tmp1 = bfnot(right);
-	struct bitfield *tmp2 = bfand(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_81(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_81(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR (NOT 2) OR 3) XOR 3 */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfor(left, tmp1);
 	struct bitfield *tmp3 = bfor(tmp2, right);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_82(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_82(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR (2 AND 3)) XOR 3 */
 	struct bitfield *tmp1 = bfand(center, right);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_83(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_83(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR (2 XOR (NOT 3))) XOR 3 */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfxor(center, tmp1);
 	struct bitfield *tmp3 = bfor(left, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_84(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_84(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR 2 OR 3) XOR 3 */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_85(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_85(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT 3 */
-	struct bitfield *tmp1 = bfnot(right);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfnot(right);
+	return output;
 }
 
-inline static void eca_86(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_86(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR 2) XOR 3 */
 	struct bitfield *tmp1 = bfor(left, center);
-	struct bitfield *tmp2 = bfxor(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_87(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_87(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 OR 2) AND 3) */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_88(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_88(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((1 OR 2) AND 3) */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_89(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_89(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR (NOT 2)) XOR 3 */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_90(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_90(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR 3 */
-	struct bitfield *tmp1 = bfxor(left, right);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfxor(left, right);
+	return output;
 }
 
-inline static void eca_91(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_91(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR (NOT (2 OR 3))) XOR 3 */
 	struct bitfield *tmp1 = bfor(center, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
 	struct bitfield *tmp3 = bfor(left, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_92(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_92(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR (2 XOR 3)) XOR 3 */
 	struct bitfield *tmp1 = bfxor(center, right);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_93(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_93(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 OR (NOT 2)) AND 3) */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfor(left, tmp1);
 	struct bitfield *tmp3 = bfand(tmp2, right);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_94(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_94(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT (1 AND 3) XOR (1 OR 2 OR 3) */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfor(left, center);
 	struct bitfield *tmp3 = bfor(tmp2, right);
-	struct bitfield *tmp4 = bfxor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_95(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_95(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT (1 AND 3) */
 	struct bitfield *tmp1 = bfand(left, right);
-	struct bitfield *tmp2 = bfnot(tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfnot(tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_96(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_96(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND (2 XOR 3) */
 	struct bitfield *tmp1 = bfxor(center, right);
-	struct bitfield *tmp2 = bfand(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_97(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_97(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 XOR 2 XOR 3) OR (2 AND 3) */
 	struct bitfield *tmp1 = bfxor(left,center);
 	struct bitfield *tmp2 = bfxor(tmp1, right);
 	struct bitfield *tmp3 = bfand(center, right);
 	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	struct bitfield *tmp5 = bfnot(tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfnot(tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_98(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_98(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((1 OR  3) AND 2) XOR 3 */
 	struct bitfield *tmp1 = bfor(left, right);
 	struct bitfield *tmp2 = bfand(tmp1, center);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_99(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_99(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) OR 3) XOR 2 */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_100(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_100(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((1 OR 2) AND 3) XOR 2 */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_101(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_101(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) OR 2) XOR 3 */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfor(tmp1, center);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_102(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_102(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 2 XOR 3 */
-	struct bitfield *tmp1 = bfxor(center, right);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfxor(center, right);
+	return output;
 }
 
-inline static void eca_103(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_103(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 OR 3)) OR (2 XOR 3) */
 	struct bitfield *tmp1 = bfor(left, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
 	struct bitfield *tmp3 = bfxor(center, right);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_104(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_104(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) XOR ((1 OR 2) AND 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(left, center);
 	struct bitfield *tmp3 = bfand(tmp2, right);
-	struct bitfield *tmp4 = bfxor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_105(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_105(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR 2 XOR (NOT 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfnot(right);
-	struct bitfield *tmp3 = bfxor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_106(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_106(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) XOR 3 */
 	struct bitfield *tmp1 = bfand(left, center);
-	struct bitfield *tmp2 = bfxor(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_107(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_107(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) XOR ((NOT (1 OR 2)) OR 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(left, center);
 	struct bitfield *tmp3 = bfnot(tmp2);
 	struct bitfield *tmp4 = bfor(tmp3, right);
-	struct bitfield *tmp5 = bfxor(tmp1, tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(tmp1, tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_108(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_108(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 3) XOR 2 */
 	struct bitfield *tmp1 = bfand(left, right);
-	struct bitfield *tmp2 = bfxor(tmp1, center);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(tmp1, center);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_109(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_109(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT ((1 XOR 2)) AND (1 OR 3)) XOR 3 */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfor(left, right);
 	struct bitfield *tmp3 = bfand(tmp1, tmp2);
 	struct bitfield *tmp4 = bfnot(tmp3);
-	struct bitfield *tmp5 = bfxor(tmp4, right);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(tmp4, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_110(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_110(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) AND 3) OR (2 XOR 3) */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfand(tmp1, right);
 	struct bitfield *tmp3 = bfxor(center, right);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_111(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_111(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT 1) OR (2 XOR 3) */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfxor(center, right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_112(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_112(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (1 AND 2 AND 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_113(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_113(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (NOT ((1 XOR 2) OR (1 XOR 3))) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(left, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
 	struct bitfield *tmp4 = bfnot(tmp3);
-	struct bitfield *tmp5 = bfxor(left, tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(left, tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_114(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_114(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((1 XOR 2) OR 3) XOR 2 */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_115(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_115(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND (NOT 3)) OR (NOT 2) */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
 	struct bitfield *tmp3 = bfnot(center);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_116(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_116(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR 2) XOR (2 AND 3) */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfand(center, right);
-	struct bitfield *tmp3 = bfxor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_117(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_117(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND (NOT 2)) OR (NOT 3) */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfand(left, tmp1);
 	struct bitfield *tmp3 = bfnot(right);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_118(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_118(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR 2 OR 3) XOR (2 AND 3) */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
 	struct bitfield *tmp3 = bfand(center, right);
-	struct bitfield *tmp4 = bfxor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_119(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_119(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT (2 AND 3) */
 	struct bitfield *tmp1 = bfand(center, right);
-	struct bitfield *tmp2 = bfnot(tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfnot(tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_120(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_120(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (2 AND 3) */
 	struct bitfield *tmp1 = bfand(center, right);
-	struct bitfield *tmp2 = bfxor(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_121(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_121(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT ((1 XOR 2) AND (2 OR 3))) XOR 3 */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfor(center, right);
 	struct bitfield *tmp3 = bfand(tmp1, tmp2);
 	struct bitfield *tmp4 = bfnot(tmp3);
-	struct bitfield *tmp5 = bfxor(tmp4, right);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(tmp4, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_122(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_122(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 3) OR ((NOT 2) AND 3) */
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfnot(center);
 	struct bitfield *tmp3 = bfand(tmp2, right);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_123(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_123(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT 2) OR (1 XOR 3) */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfxor(left, right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_124(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_124(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 2) OR (2 AND (NOT 3)) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfnot(right);
 	struct bitfield *tmp3 = bfand(center, tmp2);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_125(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_125(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 2) OR (NOT 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfnot(right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_126(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_126(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 2) OR (1 XOR 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(left, right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_127(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_127(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT (1 AND 2 AND 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_128(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_128(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND 2 AND 3 */
 	struct bitfield *tmp1 = bfand(left, center);
-	struct bitfield *tmp2 = bfand(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_129(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_129(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 XOR 2) OR (1 XOR 3)) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(left, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_130(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_130(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 2 XOR 3) AND 3 */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(tmp1, right);
-	struct bitfield *tmp3 = bfand(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_131(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_131(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 XOR 2)) AND ((NOT 1) OR 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfnot(tmp1);
 	struct bitfield *tmp3 = bfnot(left);
 	struct bitfield *tmp4 = bfor(tmp3, right);
-	struct bitfield *tmp5 = bfand(tmp2, tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfand(tmp2, tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_132(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_132(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 2 XOR 3) AND 2 */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(tmp1, right);
-	struct bitfield *tmp3 = bfand(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_133(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_133(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) OR 2) AND (NOT (1 XOR 3)) */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfor(tmp1, center);
 	struct bitfield *tmp3 = bfxor(left, right);
 	struct bitfield *tmp4 = bfnot(tmp3);
-	struct bitfield *tmp5 = bfand(tmp2, tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfand(tmp2, tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_134(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_134(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND (2 OR 3)) XOR 2 XOR 3 */
 	struct bitfield *tmp1 = bfor(center, right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
 	struct bitfield *tmp3 = bfxor(tmp2, center);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_135(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_135(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT 1) XOR (2 AND 3) */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfand(center, right);
-	struct bitfield *tmp3 = bfxor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_136(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_136(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (2 AND 3) */
-	struct bitfield *tmp1 = bfand(center, right);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfand(center, right);
+	return output;
 }
 
-inline static void eca_137(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_137(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) OR 2 OR 3) XOR 2 XOR 3 */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfor(tmp1, center);
 	struct bitfield *tmp3 = bfor(tmp2, right);
 	struct bitfield *tmp4 = bfxor(tmp3, center);
-	struct bitfield *tmp5 = bfxor(tmp4, right);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(tmp4, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_138(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_138(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) OR 2) AND 3 */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfor(tmp1, center);
-	struct bitfield *tmp3 = bfand(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_139(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_139(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 OR 2) XOR (2 AND 3)) */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfand(center, right);
 	struct bitfield *tmp3 = bfxor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_140(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_140(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) OR 3) AND 2 */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfand(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_141(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_141(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((1 XOR 2) OR (NOT 3)) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfnot(right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfxor(left, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(left, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_142(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_142(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((1 XOR 2) OR (1 XOR 3)) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(left, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfxor(left, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(left, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_143(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_143(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT 1) OR (2 AND 3) */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfand(center, right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_144(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_144(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND (1 XOR 2 XOR 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(tmp1, right);
-	struct bitfield *tmp3 = bfand(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_145(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_145(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT (((NOT 1) AND 3) OR (2 XOR 3)) */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfand(tmp1, right);
 	struct bitfield *tmp3 = bfxor(center, right);
 	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	struct bitfield *tmp5 = bfnot(tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfnot(tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_146(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_146(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((1 OR 3) AND 2) XOR 3 */
 	struct bitfield *tmp1 = bfor(left, right);
 	struct bitfield *tmp2 = bfand(tmp1, center);
 	struct bitfield *tmp3 = bfxor(left, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_147(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_147(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 3) XOR (NOT 2) */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfnot(center);
-	struct bitfield *tmp3 = bfxor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_148(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_148(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((1 OR 2) AND 3) XOR 2 */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
 	struct bitfield *tmp3 = bfxor(left, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, center);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_149(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_149(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) XOR (NOT 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfnot(right);
-	struct bitfield *tmp3 = bfxor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_150(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_150(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR 2 XOR 3 */
 	struct bitfield *tmp1 = bfxor(left, center);
-	struct bitfield *tmp2 = bfxor(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_151(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_151(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) XOR (NOT ((1 OR 2) AND 3)) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(left, center);
 	struct bitfield *tmp3 = bfand(tmp2, right);
 	struct bitfield *tmp4 = bfnot(tmp3);
-	struct bitfield *tmp5 = bfxor(tmp1, tmp4);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(tmp1, tmp4);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_152(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_152(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR 2 OR 3) XOR 2 XOR 3 */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
 	struct bitfield *tmp3 = bfxor(tmp2, center);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_153(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_153(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 2 XOR (NOT 3) */
 	struct bitfield *tmp1 = bfnot(right);
-	struct bitfield *tmp2 = bfxor(center, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(center, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_154(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_154(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (1 AND 2) XOR 3 */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_155(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_155(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 OR 2) AND (2 XOR 3)) */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfxor(center, right);
 	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_156(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_156(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (1 AND 3) XOR 2 */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_157(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_157(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 OR 3) AND (2 XOR 3)) */
 	struct bitfield *tmp1 = bfor(left, right);
 	struct bitfield *tmp2 = bfxor(center, right);
 	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_158(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_158(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 2 XOR 3) OR (2 AND 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(tmp1, right);
 	struct bitfield *tmp3 = bfand(center, right);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_159(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_159(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT (1 AND (2 XOR 3)) */
 	struct bitfield *tmp1 = bfxor(center, right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_160(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_160(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND 3 */
-	struct bitfield *tmp1 = bfand(left, right);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfand(left, right);
+	return output;
 }
 
-inline static void eca_161(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_161(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (1 OR (NOT 2) OR 3) XOR 3 */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfor(left, tmp1);
 	struct bitfield *tmp3 = bfor(tmp2, right);
 	struct bitfield *tmp4 = bfxor(left, tmp3);
-	struct bitfield *tmp5 = bfxor(tmp4, right);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(tmp4, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_162(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_162(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR (NOT 2)) AND 3 */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfand(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_163(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_163(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) OR (2 XOR 3)) XOR 2 */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfxor(center, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, center);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_164(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_164(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (1 OR 2 OR 3) XOR 3 */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
 	struct bitfield *tmp3 = bfxor(left, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_165(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_165(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (NOT 3) */
 	struct bitfield *tmp1 = bfnot(right);
-	struct bitfield *tmp2 = bfxor(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_166(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_166(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) XOR 2 XOR 3 */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfxor(tmp1, center);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_167(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_167(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 OR 2) AND (1 XOR 3)) */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfxor(left, right);
 	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_168(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_168(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR 2) AND 3 */
 	struct bitfield *tmp1 = bfor(left, center);
-	struct bitfield *tmp2 = bfand(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_169(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_169(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 OR 2)) XOR 3 */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_170(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_170(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 3 */
-	bfcpy(right, output);
+	struct bitfield *output = bfclone(right);
+	return output;
 }
 
-inline static void eca_171(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_171(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 OR 2)) OR 3 */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_172(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_172(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND (2 XOR 3)) XOR 2 */
 	struct bitfield *tmp1 = bfxor(center, right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_173(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_173(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR (NOT 3)) OR (2 AND 3) */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
 	struct bitfield *tmp3 = bfand(center, right);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_174(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_174(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((1 AND 2) XOR 2) OR 3 */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfxor(tmp1, center);
-	struct bitfield *tmp3 = bfor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_175(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_175(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT 1) OR 3 */
 	struct bitfield *tmp1 = bfnot(left);
-	struct bitfield *tmp2 = bfor(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_176(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_176(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND ((NOT 2) OR 3) */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
-	struct bitfield *tmp3 = bfand(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_177(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_177(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (NOT ((1 XOR 2) OR 3)) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
 	struct bitfield *tmp3 = bfnot(tmp2);
-	struct bitfield *tmp4 = bfxor(left, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(left, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_178(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_178(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((1 XOR 2) OR (1 XOR 3)) XOR 2 */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(left, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, center);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_179(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_179(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND  3) OR (NOT 2) */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfnot(center);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_180(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_180(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR 2 XOR (2 AND 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfand(center, right);
-	struct bitfield *tmp3 = bfxor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_181(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_181(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 XOR 3) AND (2 OR 3)) */
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfor(center, right);
 	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_182(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_182(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 3) OR (1 XOR 2 XOR 3) */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfxor(left, center);
 	struct bitfield *tmp3 = bfxor(tmp2, right);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_183(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_183(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 XOR 3) AND 2) */
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfand(tmp1, center);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_184(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_184(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((1 XOR 3) AND 2) */
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfand(tmp1, center);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_185(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_185(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 3) OR (2 XOR (NOT 3)) */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfnot(right);
 	struct bitfield *tmp3 = bfxor(center, tmp2);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_186(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_186(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND (NOT 2)) OR 3 */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_187(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_187(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT 2) OR 3 */
 	struct bitfield *tmp1 = bfnot(center);
-	struct bitfield *tmp2 = bfor(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_188(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_188(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 2) OR (2 AND 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfand(center, right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_189(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_189(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 2) OR (2 XOR (NOT 3)) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfnot(right);
 	struct bitfield *tmp3 = bfxor(center, tmp2);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_190(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_190(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 2) OR 3 */
 	struct bitfield *tmp1 = bfxor(left, center);
-	struct bitfield *tmp2 = bfor(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_191(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_191(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 AND 2)) OR 3 */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_192(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_192(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND 2 */
-	struct bitfield *tmp1 = bfand(left, center);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfand(left, center);
+	return output;
 }
 
-inline static void eca_193(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_193(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (1 OR 2 OR (NOT 3)) XOR 2 */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfnot(right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
 	struct bitfield *tmp4 = bfxor(left, tmp3);
-	struct bitfield *tmp5 = bfxor(tmp4, center);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(tmp4, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_194(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_194(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (1 OR 2 OR 3) XOR 2 */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfor(tmp1, right);
 	struct bitfield *tmp3 = bfxor(left, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, center);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_195(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_195(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (NOT 2) */
 	struct bitfield *tmp1 = bfnot(center);
-	struct bitfield *tmp2 = bfxor(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfxor(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_196(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_196(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR (NOT 3)) AND 2 */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfand(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_197(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_197(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 OR (2 XOR 3))) XOR 2 */
 	struct bitfield *tmp1 = bfxor(center, right);
 	struct bitfield *tmp2 = bfor(left, tmp1);
 	struct bitfield *tmp3 = bfnot(tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, center);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_198(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_198(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 3) XOR 2 XOR 3 */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfxor(tmp1, center);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_199(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_199(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 XOR 2) AND (1 OR 3)) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfor(left, right);
 	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_200(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_200(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 OR 3) AND 2 */
 	struct bitfield *tmp1 = bfor(left, right);
-	struct bitfield *tmp2 = bfand(tmp1, center);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(tmp1, center);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_201(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_201(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 OR 3)) XOR 2 */
 	struct bitfield *tmp1 = bfor(left, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_202(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_202(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND (2 XOR 3)) XOR 3 */
 	struct bitfield *tmp1 = bfxor(center, right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_203(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_203(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR (NOT 2)) OR (2 AND 3) */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
 	struct bitfield *tmp3 = bfand(center, right);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_204(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_204(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 2 */
-	bfcpy(center, output);
+	struct bitfield *output = bfclone(center);
+	return output;
 }
 
-inline static void eca_205(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_205(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 OR 3)) OR 2 */
 	struct bitfield *tmp1 = bfor(left, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_206(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_206(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((NOT 1) AND 3) OR 2 */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_207(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_207(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT 1) OR 2 */
 	struct bitfield *tmp1 = bfnot(left);
-	struct bitfield *tmp2 = bfor(tmp1, center);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(tmp1, center);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_208(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_208(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND (2 OR (NOT 3)) */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfor(center, tmp1);
-	struct bitfield *tmp3 = bfand(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfand(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_209(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_209(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 AND 2) XOR (2 OR 3)) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(center, right);
 	struct bitfield *tmp3 = bfxor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_210(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_210(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (2 AND 3) XOR 3 */
 	struct bitfield *tmp1 = bfand(center, right);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_211(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_211(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 XOR 2) AND (2 OR 3)) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfor(center, right);
 	struct bitfield *tmp3 = bfand(tmp1, tmp2);
-	struct bitfield *tmp4 = bfnot(tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfnot(tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_212(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_212(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((1 XOR 2) OR (1 XOR 3)) XOR 3 */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfxor(left, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	struct bitfield *tmp4 = bfxor(tmp3, right);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfxor(tmp3, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_213(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_213(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) OR (NOT 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfnot(right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_214(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_214(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) OR (1 XOR 2 XOR 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfxor(left, center);
 	struct bitfield *tmp3 = bfxor(tmp2, right);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_215(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_215(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* NOT ((1 XOR 2) AND 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfnot(tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfnot(tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_216(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_216(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR ((1 XOR 2) AND 3) */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_217(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_217(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) OR (2 XOR (NOT 3)) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfnot(right);
 	struct bitfield *tmp3 = bfxor(center, tmp2);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_218(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_218(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 3) OR (2 AND 3) */
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfand(center, right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_219(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_219(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR 3) OR (1 XOR (NOT 2)) */
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfnot(center);
 	struct bitfield *tmp3 = bfxor(left, tmp2);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_220(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_220(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND (NOT 3)) OR 2 */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfand(left, tmp1);
-	struct bitfield *tmp3 = bfor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_221(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_221(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 2 OR (NOT 3) */
 	struct bitfield *tmp1 = bfnot(right);
-	struct bitfield *tmp2 = bfor(center, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(center, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_222(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_222(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 2 OR (1 XOR 3) */
 	struct bitfield *tmp1 = bfxor(left, right);
-	struct bitfield *tmp2 = bfor(center, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(center, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_223(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_223(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT (1 AND 3)) OR 2 */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_224(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_224(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 AND (2 OR 3) */
 	struct bitfield *tmp1 = bfor(center, right);
-	struct bitfield *tmp2 = bfand(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfand(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_225(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_225(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 XOR (NOT (2 OR 3)) */
 	struct bitfield *tmp1 = bfor(center, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfxor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_226(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_226(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((1 XOR 3) AND 2) XOR 3 */
 	struct bitfield *tmp1 = bfxor(left, right);
 	struct bitfield *tmp2 = bfand(tmp1, center);
-	struct bitfield *tmp3 = bfxor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_227(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_227(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 3) OR (1 XOR (NOT 2)) */
 	struct bitfield *tmp1 = bfand(left, right);
 	struct bitfield *tmp2 = bfnot(center);
 	struct bitfield *tmp3 = bfxor(left, tmp2);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_228(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_228(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* ((1 XOR 2) AND 3) XOR 2 */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfxor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfxor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_229(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_229(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) OR (1 XOR (NOT 3)) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfnot(right);
 	struct bitfield *tmp3 = bfxor(left, tmp2);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_230(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_230(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) OR (2 XOR 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfxor(center, right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_231(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_231(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR (NOT 2)) OR (2 XOR 3) */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
 	struct bitfield *tmp3 = bfxor(center, right);
-	struct bitfield *tmp4 = bfor(tmp2, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp2, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_232(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_232(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) OR ((1 OR 2) AND 3) */
 	struct bitfield *tmp1 = bfand(left, center);
 	struct bitfield *tmp2 = bfor(left, center);
 	struct bitfield *tmp3 = bfand(tmp2, right);
-	struct bitfield *tmp4 = bfor(tmp1, tmp3);
-	bfcpy(tmp4, output);
+	struct bitfield *output = bfor(tmp1, tmp3);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
-	bfdel(tmp4);
+	return output;
 }
 
-inline static void eca_233(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_233(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT ((1 XOR 2) OR (2 AND 3))) XOR 3 */
 	struct bitfield *tmp1 = bfxor(left, center);
 	struct bitfield *tmp2 = bfand(center, right);
 	struct bitfield *tmp3 = bfor(tmp1, tmp2);
 	struct bitfield *tmp4 = bfnot(tmp3);
-	struct bitfield *tmp5 = bfxor(tmp4, right);
-	bfcpy(tmp5, output);
+	struct bitfield *output = bfxor(tmp4, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
 	bfdel(tmp3);
 	bfdel(tmp4);
-	bfdel(tmp5);
+	return output;
 }
 
-inline static void eca_234(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_234(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 2) OR 3 */
 	struct bitfield *tmp1 = bfand(left, center);
-	struct bitfield *tmp2 = bfor(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_235(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_235(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR (NOT 2)) OR 3 */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
-	struct bitfield *tmp3 = bfor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_236(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_236(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 AND 3) OR 2 */
 	struct bitfield *tmp1 = bfand(left, right);
-	struct bitfield *tmp2 = bfor(tmp1, center);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(tmp1, center);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_237(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_237(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (1 XOR (NOT 3)) OR 2 */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfxor(left, tmp1);
-	struct bitfield *tmp3 = bfor(tmp2, center);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, center);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_238(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_238(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 2 OR 3 */
-	struct bitfield *tmp1 = bfor(center, right);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfor(center, right);
+	return output;
 }
 
-inline static void eca_239(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_239(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* (NOT 1) OR 2 OR 3 */
 	struct bitfield *tmp1 = bfnot(left);
 	struct bitfield *tmp2 = bfor(tmp1, center);
-	struct bitfield *tmp3 = bfor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_240(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_240(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 */
-	bfcpy(left, output);
+	struct bitfield *output = bfclone(left);
+	return output;
 }
 
-inline static void eca_241(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_241(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR (NOT (2 OR 3)) */
 	struct bitfield *tmp1 = bfor(center, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_242(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_242(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR ((NOT 2) AND 3) */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfand(tmp1, right);
-	struct bitfield *tmp3 = bfor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_243(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_243(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR (NOT 2) */
 	struct bitfield *tmp1 = bfnot(center);
-	struct bitfield *tmp2 = bfor(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_244(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_244(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR (2 AND (NOT 3)) */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfand(center, tmp1);
-	struct bitfield *tmp3 = bfor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_245(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_245(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR (NOT 3) */
 	struct bitfield *tmp1 = bfnot(right);
-	struct bitfield *tmp2 = bfor(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_246(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_246(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR (2 XOR 3) */
 	struct bitfield *tmp1 = bfxor(center, right);
-	struct bitfield *tmp2 = bfor(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_247(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_247(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR (NOT (2 AND 3)) */
 	struct bitfield *tmp1 = bfand(center, right);
 	struct bitfield *tmp2 = bfnot(tmp1);
-	struct bitfield *tmp3 = bfor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_248(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_248(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR (2 AND 3) */
 	struct bitfield *tmp1 = bfand(center, right);
-	struct bitfield *tmp2 = bfor(left, tmp1);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(left, tmp1);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_249(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_249(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR (2 XOR (NOT 3)) */
 	struct bitfield *tmp1 = bfnot(right);
 	struct bitfield *tmp2 = bfxor(center, tmp1);
-	struct bitfield *tmp3 = bfor(left, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(left, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_250(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_250(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR 3 */
-	struct bitfield *tmp1 = bfor(left, right);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfor(left, right);
+	return output;
 }
 
-inline static void eca_251(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_251(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR (NOT 2) OR 3 */
 	struct bitfield *tmp1 = bfnot(center);
 	struct bitfield *tmp2 = bfor(left, tmp1);
-	struct bitfield *tmp3 = bfor(tmp2, right);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp2, right);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_252(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_252(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR 2 */
-	struct bitfield *tmp1 = bfor(left, center);
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	struct bitfield *output = bfor(left, center);
+	return output;
 }
 
-inline static void eca_253(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_253(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR 2 OR (NOT 3) */
 	struct bitfield *tmp1 = bfor(left, center);
 	struct bitfield *tmp2 = bfnot(right);
-	struct bitfield *tmp3 = bfor(tmp1, tmp2);
-	bfcpy(tmp3, output);
+	struct bitfield *output = bfor(tmp1, tmp2);
 	bfdel(tmp1);
 	bfdel(tmp2);
-	bfdel(tmp3);
+	return output;
 }
 
-inline static void eca_254(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_254(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* 1 OR 2 OR 3 */
 	struct bitfield *tmp1 = bfor(left, center);
-	struct bitfield *tmp2 = bfor(tmp1, right);
-	bfcpy(tmp2, output);
+	struct bitfield *output = bfor(tmp1, right);
 	bfdel(tmp1);
-	bfdel(tmp2);
+	return output;
 }
 
-inline static void eca_255(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right, struct bitfield *output)
+inline static struct bitfield *eca_255(const struct bitfield *left, const struct bitfield *center, const struct bitfield *right)
 {
 	/* a unit */
-	struct bitfield *tmp1 = bfnew_ones(bfsize(left));
-	bfcpy(tmp1, output);
-	bfdel(tmp1);
+	int input_size = bfsize(left);
+	struct bitfield *output = bfnew_ones(input_size);
+	return output;
 }
 
-static void (*eca[256])() = {
+static struct bitfield * (*eca[256])() = {
 	&eca_0,
 	&eca_1,
 	&eca_2,
@@ -3333,10 +3087,12 @@ void eca_string_ip(struct bitfield *instance, const unsigned int wolfram_code)
 	struct bitfield *center = bfsub(instance, 1, size - 1);
 	struct bitfield *right = bfsub(instance, 0, size - 2);
 	bfresize(instance, size - 2);
-	eca[wolfram_code](left, center, right, instance);
+	struct bitfield *output = eca[wolfram_code](left, center, right);
+	bfcpy(output, instance);
 	bfdel(left);
 	bfdel(center);
 	bfdel(right);
+	bfdel(output);
 }
 
 struct bitfield *eca_string(const struct bitfield *input, const unsigned int wolfram_code)
@@ -3345,8 +3101,7 @@ struct bitfield *eca_string(const struct bitfield *input, const unsigned int wol
 	struct bitfield *left = bfsub(input, 2, input_size);
 	struct bitfield *center = bfsub(input, 1, input_size - 1);
 	struct bitfield *right = bfsub(input, 0, input_size - 2);
-	struct bitfield *output = bfnew_quick(input_size - 2);
-	eca[wolfram_code](left, center, right, output);
+	struct bitfield *output = eca[wolfram_code](left, center, right);
 	bfdel(left);
 	bfdel(center);
 	bfdel(right);
@@ -3357,21 +3112,18 @@ void eca_ring_ip(struct bitfield *instance, const unsigned int wolfram_code)
 {
 	struct bitfield *left = bfshift(instance, -1);
 	struct bitfield *right = bfshift(instance, 1);
-	struct bitfield *center = bfclone(instance);
-	eca[wolfram_code](left, center, right, instance);
+	struct bitfield *output = eca[wolfram_code](left, instance, right);
+	bfcpy(output, instance);
 	bfdel(left);
-	bfdel(center);
 	bfdel(right);
+	bfdel(output);
 }
 
 struct bitfield *eca_ring(const struct bitfield *input, const unsigned int wolfram_code)
 {
-	int input_size = bfsize(input);
 	struct bitfield *left = bfshift(input, -1);
 	struct bitfield *right = bfshift(input, 1);
-//	struct bitfield *center = bfclone(input);
-	struct bitfield *output = bfnew_quick(input_size);
-	eca[wolfram_code](left, input, right, output);
+	struct bitfield *output = eca[wolfram_code](left, input, right);
 	bfdel(left);
 	bfdel(right);
 	return output;
