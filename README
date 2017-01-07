@@ -30,7 +30,7 @@ One-Dimensional Cellular Automata, Journal of Cellular Automata. 2007, Vol. 2 Is
 Installation
 ------------
 
-To compile bitfield from source code:
+To compile bitfield-eca from source code:
 
     $ autoconf
     $ ./configure --prefix=DIRECTORY
@@ -45,6 +45,29 @@ directory) and will attempt to build it first.
 `make` builds a shared and a static library. For a shared or a static library only, do `make shared` or `make static`.
 `make check` runs some tests agains the newly-built library.
 `make examples` runs some examples with graphical output.
+
+Usage
+-----
+
+Using the functions provided by bitfield-eca library in a project is
+straightforward. If bitfield-eca library files are installed system-wide in
+standard locations, then one needs to (1) include a system version of the header
+file to the source
+
+#include <bitfield-eca.h>
+
+and (2) add the "-lbitfield-eca" flag to compiler instructions
+
+gcc ... -lbitfield-eca
+
+Alternatively, if bitfield-eca library is integrated into a project, then one needs to (1) include a local version of the header file to the source
+
+#include "PATH_TO_HEADER/bitfield-eca.h"
+
+and (2) add the "-lbitfield-eca" flag, along with the path to the header and
+path to the library to compiler instructions
+
+gcc ... -I$(PATH_TO_HEADER) -L$(PATH_TO_LIBRARY) -lbitfield-eca
 
 Functions
 ---------
