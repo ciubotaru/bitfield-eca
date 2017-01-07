@@ -3347,6 +3347,9 @@ struct bitfield *eca_string(const struct bitfield *input, const unsigned int wol
 	struct bitfield *right = bfsub(input, 0, input_size - 2);
 	struct bitfield *output = bfnew_quick(input_size - 2);
 	eca[wolfram_code](left, center, right, output);
+	bfdel(left);
+	bfdel(center);
+	bfdel(right);
 	return output;
 }
 
@@ -3369,5 +3372,7 @@ struct bitfield *eca_ring(const struct bitfield *input, const unsigned int wolfr
 //	struct bitfield *center = bfclone(input);
 	struct bitfield *output = bfnew_quick(input_size);
 	eca[wolfram_code](left, input, right, output);
+	bfdel(left);
+	bfdel(right);
 	return output;
 }
