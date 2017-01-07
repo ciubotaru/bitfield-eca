@@ -1,0 +1,41 @@
+.TH eca 3 "JANUARY 7, 2017" "bitfield-eca 0.0.1" "Elementary Cellular Automata library"
+.SH NAME
+eca_string, eca_string_ip, eca_ring, eca_ring_ip \- transform an array of bits as an elementary cellular automaton given by "Wolfram's code".
+.SH SYNOPSIS
+.nf
+.B "#include <bitfield-eca.h>
+.sp
+.BI "struct bitfield *eca_string(const struct bitfield *"input ", const unsigned int "wolfram_code ");
+.BI "void eca_string_ip(struct bitfield *"instance ", const unsigned int "wolfram_code ");
+.BI "struct bitfield *eca_ring(const struct bitfield *"input ", const unsigned int "wolfram_code ");
+.BI "void eca_ring_ip(struct bitfield *"instance ", const unsigned int "wolfram_code ");
+.fi
+.SH DESCRIPTION
+All functions take two arguments: a pointer to a "bitfield" structure (an array of bits) and an integer (the number of elementary cellular automaton in "Wolfram's Code" notation). The functions with "_ip" suffix perform an "in-place" transformation, changing the bitfield, while the functions without it provide the resulting bitfield in their return value.
+
+The "_string" functions perform a linear transformation and produce an array two bits shorter than the input. The "_ring" functions perform a circular transformation (i.e. treat the bit array as a loop) and produce an array of same length as the input.
+.sp
+.br
+For details about bit arrays, see manual page for 
+.BR bitfield (3).
+.SH EXAMPLE
+E.g. the following code
+.sp
+.RS
+/* create and fill the parent string, 5 bits long */
+.br
+struct bitfield *input = str2bf("00100");
+.br
+/* transform by Rule 30 and get the child string, 3 bits long */
+.br
+struct bitfield *output = eca_string(input, 30);
+.br
+/* print the bits as zeroes and ones, left to right, least bit first */
+.br
+bfprint_lsb(output);
+.br
+.RE
+.LP
+should return "111".
+.SH AUTHOR
+Vitalie CIUBOTARU

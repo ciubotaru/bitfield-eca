@@ -1,15 +1,19 @@
 datarootdir=@datarootdir@
 prefix=@prefix@
 mandir=@mandir@
-man_MANS=
+man_MANS=eca.3
 
 install:
 	mkdir -p $(DESTDIR)$(mandir)/man3
 	for i in $(man_MANS); do install -m 644 $$i $(DESTDIR)$(mandir)/man3/$$i; done
-#	ln -s x.3 $(DESTDIR)$(mandir)/man3/x.3
+	ln -s eca.3 $(DESTDIR)$(mandir)/man3/bitfield-eca.3
+	ln -s eca.3 $(DESTDIR)$(mandir)/man3/eca_string.3
+	ln -s eca.3 $(DESTDIR)$(mandir)/man3/eca_string_ip.3
+	ln -s eca.3 $(DESTDIR)$(mandir)/man3/eca_ring.3
+	ln -s eca.3 $(DESTDIR)$(mandir)/man3/eca_ring_ip.3
 
 uninstall:
-#	for i in x.3; do if [ -e $(DESTDIR)$(mandir)/man3/$$i ]; then rm -v $(DESTDIR)$(mandir)/man3/$$i; fi; done
+#	for i in bitfield-eca.3 eca_string.3 eca_string_ip.3 eca_ring.3 eca_ring_ip.3; do if [ -e $(DESTDIR)$(mandir)/man3/$$i ]; then rm -v $(DESTDIR)$(mandir)/man3/$$i; fi; done
 	for i in $(man_MANS); do if [ -e $(DESTDIR)$(mandir)/man3/$$i ]; then rm -v $(DESTDIR)$(mandir)/man3/$$i; fi; done
 
 distclean:
