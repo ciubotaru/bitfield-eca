@@ -17,7 +17,7 @@
 
 int main()
 {
-	int i, j;			//counter
+	int i, j;		//counter
 	int len = 80;
 	char *msg = "Testing eca_ring_ip()";
 	char *failed = "[FAIL]";
@@ -28,10 +28,10 @@ int main()
 		printf(".");
 	for (i = 0; i < 256; i++) {
 		for (j = 0; j < 8; j++) {
-			struct bitfield *input = int2bf( &j, 3);
+			struct bitfield *input = int2bf(&j, 3);
 			eca_ring_ip(input, i);
 			unsigned char *input_char = bf2char(input);
-			if (((input_char[0] >> 1) & 1) != (( i >> j) & 1)) {
+			if (((input_char[0] >> 1) & 1) != ((i >> j) & 1)) {
 				printf("%s\n", failed);
 				printf("Failed algorythm was: eca_%i\n", i);
 				bfdel(input);

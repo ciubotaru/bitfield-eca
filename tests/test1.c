@@ -17,7 +17,7 @@
 
 int main()
 {
-	int i, j;			//counter
+	int i, j;		//counter
 	int len = 80;
 	char *msg = "Testing eca_string()";
 	char *failed = "[FAIL]";
@@ -28,10 +28,10 @@ int main()
 		printf(".");
 	for (i = 0; i < 256; i++) {
 		for (j = 0; j < 8; j++) {
-			struct bitfield *input = int2bf( &j, 3);
+			struct bitfield *input = int2bf(&j, 3);
 			struct bitfield *output = eca_string(input, i);
 			unsigned char *output_char = bf2char(output);
-			if (output_char[0] != (( i >> j) & 1)) {
+			if (output_char[0] != ((i >> j) & 1)) {
 				printf("%s\n", failed);
 				printf("Failed algorythm was: eca_%i\n", i);
 				bfdel(input);
