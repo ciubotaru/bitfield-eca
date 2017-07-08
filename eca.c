@@ -8,6 +8,7 @@
  * Copyright 2017
 **/
 
+#include "stdlib.h"
 #include "eca.h"
 
 inline static struct bitfield *eca_0(const struct bitfield *left,
@@ -3586,25 +3587,34 @@ static struct bitfield *(*eca[256]) () = {
 	    &eca_249,
 	    &eca_250, &eca_251, &eca_252, &eca_253, &eca_254, &eca_255};
 
-void eca_string_ip(struct bitfield *instance, const unsigned int wolfram_code)
+unsigned int eca_string_ip(struct bitfield *instance, const unsigned int wolfram_code)
 {
+	int retval = 0;
 	int size = bfsize(instance);
+	if (size < 3) return 1;
 	struct bitfield *left = bfsub(instance, 2, size);
 	struct bitfield *center = bfsub(instance, 1, size - 1);
 	struct bitfield *right = bfsub(instance, 0, size - 2);
+	if (!left || !center || !right) {
+		retval = 1;
+		goto output;
+	}
 	bfresize(instance, size - 2);
 	struct bitfield *output = eca[wolfram_code] (left, center, right);
 	bfcpy(output, instance);
+	bfdel(output);
+output:
 	bfdel(left);
 	bfdel(center);
 	bfdel(right);
-	bfdel(output);
+	return retval;
 }
 
 struct bitfield *eca_string(const struct bitfield *input,
 			    const unsigned int wolfram_code)
 {
 	int input_size = bfsize(input);
+	if (input_size < 3) return NULL;
 	struct bitfield *left = bfsub(input, 2, input_size);
 	struct bitfield *center = bfsub(input, 1, input_size - 1);
 	struct bitfield *right = bfsub(input, 0, input_size - 2);
