@@ -3,6 +3,11 @@ prefix=@prefix@
 mandir=@mandir@
 man_MANS=eca.3
 
+all: $(man_MANS)
+
+$(man_MANS): %: %.in
+	sed -e 's/%RELEASE_DATE%/$(RELEASE_DATE)/g' -e 's/%VERSION%/$(VERSION)/g' $< > $@
+
 install:
 	mkdir -p $(DESTDIR)$(mandir)/man3
 	for i in $(man_MANS); do install -m 644 $$i $(DESTDIR)$(mandir)/man3/$$i; done
@@ -18,5 +23,8 @@ uninstall:
 
 distclean:
 	rm Makefile
+
+clean:
+	rm $(man_MANS)
 
 .PHONY: install uninstall distclean

@@ -1,4 +1,4 @@
-.TH eca 3 "JANUARY 7, 2017" "bitfield-eca 0.0.1" "Elementary Cellular Automata library"
+.TH eca 3 "%RELEASE_DATE%" "bitfield-eca %VERSION%" "Elementary Cellular Automata library"
 .SH NAME
 eca_string, eca_string_ip, eca_ring, eca_ring_ip \- transform an array of bits as an elementary cellular automaton given by "Wolfram's code".
 .SH SYNOPSIS

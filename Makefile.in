@@ -9,7 +9,10 @@ mandir=@mandir@
 AR=ar
 CFLAGS=-Wall -O3
 export CFLAGS
-VERSION=0.0.1
+VERSION=@PACKAGE_VERSION@
+export VERSION
+RELEASE_DATE=June 17, 2017
+export RELEASE_DATE
 MANDIR=man
 TESTDIR=tests
 EXAMPLEDIR=examples
@@ -25,7 +28,7 @@ PACKAGE_VERSION=@PACKAGE_VERSION@
 
 .PHONY: bitfield test check man shared static install install-lib install-man install-header clean distclean uninstall uninstall-lib uninstall-man uninstall-header example examples
 
-all: bitfield shared static
+all: bitfield shared static man
 
 bitfield:
 	@if [ $(HAVE_BITFIELD) -eq 0 ]; then \
@@ -52,6 +55,9 @@ libbitfield-eca.a: eca.c
 	else \
 	$(AR) rcs libbitfield-eca.a eca-static.o; \
 	fi
+
+man:
+	$(MAKE) -C $(MANDIR)
 
 test: check
 
@@ -103,6 +109,7 @@ clean:
 	rm -rvf *.a *.o *.so*
 	$(MAKE) -C $(TESTDIR) clean
 	$(MAKE) -C $(EXAMPLEDIR) clean
+	$(MAKE) -C $(MANDIR) clean
 
 distclean: clean
 	rm config.log config.status config.h Makefile
