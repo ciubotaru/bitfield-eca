@@ -3625,22 +3625,29 @@ struct bitfield *eca_string(const struct bitfield *input,
 	return output;
 }
 
-void eca_ring_ip(struct bitfield *instance, const unsigned int wolfram_code)
+unsigned int eca_ring_ip(struct bitfield *instance, const unsigned int wolfram_code)
 {
-	struct bitfield *left = bfshift(instance, -1);
-	struct bitfield *right = bfshift(instance, 1);
+	int retval = 0;
+	struct bitfield *left = bfshift(instance, 1);
+	struct bitfield *right = bfshift(instance, -1);
+	if (!left || !right) {
+		retval = 1;
+		goto output;
+	}
 	struct bitfield *output = eca[wolfram_code] (left, instance, right);
 	bfcpy(output, instance);
+	bfdel(output);
+output:
 	bfdel(left);
 	bfdel(right);
-	bfdel(output);
+	return retval;
 }
 
 struct bitfield *eca_ring(const struct bitfield *input,
 			  const unsigned int wolfram_code)
 {
-	struct bitfield *left = bfshift(input, -1);
-	struct bitfield *right = bfshift(input, 1);
+	struct bitfield *left = bfshift(input, 1);
+	struct bitfield *right = bfshift(input, -1);
 	struct bitfield *output = eca[wolfram_code] (left, input, right);
 	bfdel(left);
 	bfdel(right);
