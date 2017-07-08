@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT(bitfield-eca, 0.0.1, vitalie@ciubotaru.tk)
+AC_INIT(bitfield-eca, 1.0.0, vitalie@ciubotaru.tk)
 AC_CONFIG_SRCDIR([eca.c])
 AC_ARG_WITH([local-bitfield], AS_HELP_STRING([--with-local-bitfield], [Ignore system bitfield library and build local]), [], [])
 AC_CONFIG_HEADERS([config.h])
@@ -24,6 +24,10 @@ AC_PROG_MAKE_SET
 
 # Check for system-wide bitfield
 AC_SEARCH_LIBS([bfnew], [bitfield], [AC_SUBST(HAVE_BITFIELD, 1)], [AC_SUBST(HAVE_BITFIELD, 0)], [])
+
+PKG_PROG_PKG_CONFIG([0.25])
+
+PKG_CHECK_MODULES(BITFIELD, libbitfield >= 1.0.0)
 
 # Check if --with_local_bitfield was passed
 AS_IF([test "x$with_local_bitfield" = "xyes"],

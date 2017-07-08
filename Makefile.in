@@ -7,7 +7,7 @@ libdir=@libdir@
 includedir=@includedir@
 mandir=@mandir@
 AR=ar
-CFLAGS=-Wall -O3
+CFLAGS=@CFLAGS@
 export CFLAGS
 VERSION=@PACKAGE_VERSION@
 export VERSION
@@ -44,8 +44,8 @@ bitfield:
 shared: libbitfield-eca.so.$(VERSION)
 libbitfield-eca.so.$(VERSION): eca.c
 	$(CC) $(CFLAGS) -c -fpic eca.c -o eca-shared.o $(BITFIELD_INC) -I.
-	$(CC) $(CFLAGS) -shared -Wl,-soname,libbitfield-eca.so.0 -o libbitfield-eca.so.$(VERSION) eca-shared.o $(BITFIELD_LIB) $(BITFIELD_INC) -I. -lbitfield
-	for i in libbitfield-eca.so.0 libbitfield-eca.so; do ln -svf libbitfield-eca.so.$(VERSION) $$i; done
+	$(CC) $(CFLAGS) -shared -Wl,-soname,libbitfield-eca.so.1 -o libbitfield-eca.so.$(VERSION) eca-shared.o $(BITFIELD_LIB) $(BITFIELD_INC) -I. `pkg-config --libs libbitfield`
+	for i in libbitfield-eca.so.1 libbitfield-eca.so; do ln -svf libbitfield-eca.so.$(VERSION) $$i; done
 
 static: libbitfield-eca.a
 libbitfield-eca.a: eca.c
@@ -73,9 +73,9 @@ install: install-lib install-header install-man install-bitfield
 
 install-lib:
 	mkdir -p $(DESTDIR)$(libdir)
-	for i in libbitfield-eca.so.0 libbitfield-eca.so libbitfield-eca.so.$(VERSION) librule30.a; do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
+	for i in libbitfield-eca.so.1 libbitfield-eca.so libbitfield-eca.so.$(VERSION) librule30.a; do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
 	install -m 0644 libbitfield-eca.so.$(VERSION) $(DESTDIR)$(libdir)
-	ln -sv libbitfield-eca.so.$(VERSION) $(DESTDIR)$(libdir)/libbitfield-eca.so.0
+	ln -sv libbitfield-eca.so.$(VERSION) $(DESTDIR)$(libdir)/libbitfield-eca.so.1
 	ln -sv libbitfield-eca.so.$(VERSION) $(DESTDIR)$(libdir)/libbitfield-eca.so
 	install -m 0644 libbitfield-eca.a $(DESTDIR)$(libdir)
 
@@ -93,7 +93,7 @@ install-bitfield:
 uninstall: uninstall-lib uninstall-header uninstall-man uninstall-bitfield
 
 uninstall-lib:
-	for i in libbitfield-eca.so.0 libbitfield-eca.so libbitfield-eca.so.$(VERSION) libbitfield-eca.a; do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
+	for i in libbitfield-eca.so.1 libbitfield-eca.so libbitfield-eca.so.$(VERSION) libbitfield-eca.a; do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
 
 uninstall-header:
 	if [ -e $(DESTDIR)$(includedir)/bitfield-eca.h ]; then rm -v $(DESTDIR)$(includedir)/bitfield-eca.h; fi
