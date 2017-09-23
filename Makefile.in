@@ -20,7 +20,7 @@ LD_LIBRARY_PATH := $(shell pwd):$(LD_LIBRARY_PATH)
 export LD_LIBRARY_PATH
 PACKAGE_VERSION=@PACKAGE_VERSION@
 
-.PHONY:test check man shared static install install-lib install-man install-header clean distclean uninstall uninstall-lib uninstall-man uninstall-header example examples
+.PHONY:test check man shared static install install-lib install-man install-header install-pc clean distclean uninstall uninstall-lib uninstall-man uninstall-header uninstall-pc example examples
 
 all: shared static man
 
@@ -65,6 +65,10 @@ install-header:
 install-man:
 	$(MAKE) -C $(MANDIR) install
 
+install-pc: libeca.pc
+	install -d $(DESTDIR)$(libdir)/pkgconfig
+	install -m 0644 $< $(DESTDIR)$(libdir)/pkgconfig
+
 uninstall: uninstall-lib uninstall-header uninstall-man
 
 uninstall-lib:
@@ -75,6 +79,9 @@ uninstall-header:
 
 uninstall-man:
 	$(MAKE) -C $(MANDIR) uninstall
+
+uninstall-pc:
+	if [ -e $(DESTDIR)$(libdir)/pkgconfig/libeca.pc ]; then rm -v $(DESTDIR)$(libdir)/pkgconfig/libeca.pc; fi
 
 clean:
 	rm -rvf *.a *.o *.so*

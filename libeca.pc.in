@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: @PACKAGE_NAME@
+Description: A collection of algorithms that implement Elementary Cellular Automata
+URL: https://github.com/ciubotaru/eca
+Version: @PACKAGE_VERSION@
+Requires:
+Libs: -L${libdir} -leca
+Cflags: -I${includedir}
