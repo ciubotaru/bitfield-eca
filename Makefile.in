@@ -18,43 +18,22 @@ TESTDIR=tests
 EXAMPLEDIR=examples
 LD_LIBRARY_PATH := $(shell pwd):$(LD_LIBRARY_PATH)
 export LD_LIBRARY_PATH
-HAVE_BITFIELD=@HAVE_BITFIELD@
-export HAVE_BITFIELD
-ifeq ($(HAVE_BITFIELD), 0)
-BITFIELD_LIB = -L../bitfield
-BITFIELD_INC = -I../bitfield
-endif
 PACKAGE_VERSION=@PACKAGE_VERSION@
 
-.PHONY: bitfield test check man shared static install install-lib install-man install-header clean distclean uninstall uninstall-lib uninstall-man uninstall-header example examples
+.PHONY:test check man shared static install install-lib install-man install-header clean distclean uninstall uninstall-lib uninstall-man uninstall-header example examples
 
-all: bitfield shared static man
-
-bitfield:
-	@if [ $(HAVE_BITFIELD) -eq 0 ]; then \
-	if [ ! -d "bitfield" ] && [ ! -f "bitfield" ]; then echo "Local bitfield is required, but bitfield source tree is missing.\nPlease, provide 'bitfield' directory with source tree and type 'make' again."; exit 1; fi; \
-	echo 'Building local bitfield.'; \
-	$(MAKE) -C bitfield clean; \
-	cd bitfield; \
-	./configure --prefix=$(prefix); \
-	cd ..; \
-	$(MAKE) -C bitfield all; \
-	else echo 'Using systemwide bitfield.'; fi
+all: shared static man
 
 shared: libbitfield-eca.so.$(VERSION)
 libbitfield-eca.so.$(VERSION): eca.c
-	$(CC) $(CFLAGS) -c -fpic eca.c -o eca-shared.o $(BITFIELD_INC) -I.
+	$(CC) $(CFLAGS) -c -fpic eca.c -o eca-shared.o -I.
 	$(CC) $(CFLAGS) -shared -Wl,-soname,libbitfield-eca.so.1 -o libbitfield-eca.so.$(VERSION) eca-shared.o $(BITFIELD_LIB) $(BITFIELD_INC) -I. `pkg-config --libs libbitfield`
 	for i in libbitfield-eca.so.1 libbitfield-eca.so; do ln -svf libbitfield-eca.so.$(VERSION) $$i; done
 
 static: libbitfield-eca.a
 libbitfield-eca.a: eca.c
-	$(CC) $(CFLAGS) -c eca.c -o eca-static.o $(BITFIELD_INC) -I.
-	@if [ $(HAVE_BITFIELD) -eq 0 ]; then \
-	$(AR) rcs libbitfield-eca.a eca-static.o bitfield/bf-static.o; \
-	else \
-	$(AR) rcs libbitfield-eca.a eca-static.o; \
-	fi
+	$(CC) $(CFLAGS) -c eca.c -o eca-static.o -I.
+	$(AR) rcs libbitfield-eca.a eca-static.o
 
 man:
 	$(MAKE) -C $(MANDIR)
@@ -69,7 +48,7 @@ examples: example
 example:
 	$(MAKE) -C $(EXAMPLEDIR)
 
-install: install-lib install-header install-man install-bitfield
+install: install-lib install-header install-man
 
 install-lib:
 	mkdir -p $(DESTDIR)$(libdir)
@@ -86,11 +65,7 @@ install-header:
 install-man:
 	$(MAKE) -C $(MANDIR) install
 
-install-bitfield:
-	@if [ $(HAVE_BITFIELD) -eq 0 ]; then \
-	echo '* * *\nDo not forget to run "make install" in your bitfield source tree.'; fi
-
-uninstall: uninstall-lib uninstall-header uninstall-man uninstall-bitfield
+uninstall: uninstall-lib uninstall-header uninstall-man
 
 uninstall-lib:
 	for i in libbitfield-eca.so.1 libbitfield-eca.so libbitfield-eca.so.$(VERSION) libbitfield-eca.a; do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
@@ -100,10 +75,6 @@ uninstall-header:
 
 uninstall-man:
 	$(MAKE) -C $(MANDIR) uninstall
-
-uninstall-bitfield:
-	@if [ $(HAVE_BITFIELD) -eq 0 ]; then \
-	echo '* * *\nDo not forget to run "make uninstall" in your bitfield source tree.'; fi
 
 clean:
 	rm -rvf *.a *.o *.so*

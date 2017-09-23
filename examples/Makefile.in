@@ -1,17 +1,10 @@
 EXAMPLES=rule30 eca
 LIBS=-L.. -I..
-HAVE_BITFIELD=@HAVE_BITFIELD@
-ifeq ($(HAVE_BITFIELD), 0)
-BITFIELD_LIB = -L../bitfield -I../bitfield
-LD_LIBRARY_PATH := $(shell pwd)/../bitfield:$(LD_LIBRARY_PATH)
-else
-BITFIELD_LIB =
-endif
 
 all: build-examples run-examples
 build-examples: $(EXAMPLES)
 $(EXAMPLES): %: %.c
-	$(CC) $(CFLAGS) -Wl,-rpath=$(CURDIR) -o $@ $< $(LIBS) -lbitfield-eca $(BITFIELD_LIB) -lbitfield
+	$(CC) $(CFLAGS) -Wl,-rpath=$(CURDIR) -o $@ $< $(LIBS) -lbitfield-eca -lbitfield
 
 run-examples:
 	for i in $(EXAMPLES); do \

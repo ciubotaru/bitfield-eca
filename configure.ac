@@ -2,9 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT(bitfield-eca, 1.0.0, vitalie@ciubotaru.tk)
+AC_INIT(bitfield-eca, 1.0.0, vitalie@ciubotaru.tokyo)
 AC_CONFIG_SRCDIR([eca.c])
-AC_ARG_WITH([local-bitfield], AS_HELP_STRING([--with-local-bitfield], [Ignore system bitfield library and build local]), [], [])
 AC_CONFIG_HEADERS([config.h])
 
 if test "x$prefix" = "xNONE" ; then
@@ -22,22 +21,9 @@ AC_PROG_CC([gcc pcc icc])
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
-# Check for system-wide bitfield
-AC_SEARCH_LIBS([bfnew], [bitfield], [AC_SUBST(HAVE_BITFIELD, 1)], [AC_SUBST(HAVE_BITFIELD, 0)], [])
-
 PKG_PROG_PKG_CONFIG([0.25])
 
-PKG_CHECK_MODULES(BITFIELD, libbitfield >= 1.0.0)
-
-# Check if --with_local_bitfield was passed
-AS_IF([test "x$with_local_bitfield" = "xyes"],
-  # if yes, ignore system-wide bitfield
-  AC_SUBST(HAVE_BITFIELD, 0),
-  # otherwise check whether system-wide bitfield was found and building local bitfield was explicitly prohibited
-  AS_IF([test "x$with_local_bitfield" = "xno" && test "$HAVE_BITFIELD" = 0],
-    AC_MSG_ERROR([bitfield library not found]),
-  )
-)
+PKG_CHECK_MODULES(libbitfield, libbitfield >= 1.0.0)
 
 # Checks for header files.
 AC_CHECK_HEADERS(limits.h stdlib.h string.h bitfield.h)
