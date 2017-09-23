@@ -24,16 +24,16 @@ PACKAGE_VERSION=@PACKAGE_VERSION@
 
 all: shared static man
 
-shared: libbitfield-eca.so.$(VERSION)
-libbitfield-eca.so.$(VERSION): eca.c
+shared: libeca.so.$(VERSION)
+libeca.so.$(VERSION): eca.c
 	$(CC) $(CFLAGS) -c -fpic eca.c -o eca-shared.o -I.
-	$(CC) $(CFLAGS) -shared -Wl,-soname,libbitfield-eca.so.1 -o libbitfield-eca.so.$(VERSION) eca-shared.o $(BITFIELD_LIB) $(BITFIELD_INC) -I. `pkg-config --libs libbitfield`
-	for i in libbitfield-eca.so.1 libbitfield-eca.so; do ln -svf libbitfield-eca.so.$(VERSION) $$i; done
+	$(CC) $(CFLAGS) -shared -Wl,-soname,libeca.so.1 -o libeca.so.$(VERSION) eca-shared.o -I. `pkg-config --libs libbitfield`
+	for i in libeca.so.1 libeca.so; do ln -svf libeca.so.$(VERSION) $$i; done
 
-static: libbitfield-eca.a
-libbitfield-eca.a: eca.c
+static: libeca.a
+libeca.a: eca.c
 	$(CC) $(CFLAGS) -c eca.c -o eca-static.o -I.
-	$(AR) rcs libbitfield-eca.a eca-static.o
+	$(AR) rcs libeca.a eca-static.o
 
 man:
 	$(MAKE) -C $(MANDIR)
@@ -52,15 +52,15 @@ install: install-lib install-header install-man
 
 install-lib:
 	mkdir -p $(DESTDIR)$(libdir)
-	for i in libbitfield-eca.so.1 libbitfield-eca.so libbitfield-eca.so.$(VERSION) librule30.a; do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
-	install -m 0644 libbitfield-eca.so.$(VERSION) $(DESTDIR)$(libdir)
-	ln -sv libbitfield-eca.so.$(VERSION) $(DESTDIR)$(libdir)/libbitfield-eca.so.1
-	ln -sv libbitfield-eca.so.$(VERSION) $(DESTDIR)$(libdir)/libbitfield-eca.so
-	install -m 0644 libbitfield-eca.a $(DESTDIR)$(libdir)
+	for i in libeca.so.1 libeca.so libeca.so.$(VERSION); do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
+	install -m 0644 libeca.so.$(VERSION) $(DESTDIR)$(libdir)
+	ln -sv libeca.so.$(VERSION) $(DESTDIR)$(libdir)/libeca.so.1
+	ln -sv libeca.so.$(VERSION) $(DESTDIR)$(libdir)/libeca.so
+	install -m 0644 libeca.a $(DESTDIR)$(libdir)
 
 install-header:
 	mkdir -p $(DESTDIR)$(includedir)
-	install -m 644 eca.h $(DESTDIR)$(includedir)/bitfield-eca.h
+	install -m 644 eca.h $(DESTDIR)$(includedir)/eca.h
 
 install-man:
 	$(MAKE) -C $(MANDIR) install
@@ -68,10 +68,10 @@ install-man:
 uninstall: uninstall-lib uninstall-header uninstall-man
 
 uninstall-lib:
-	for i in libbitfield-eca.so.1 libbitfield-eca.so libbitfield-eca.so.$(VERSION) libbitfield-eca.a; do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
+	for i in libeca.so.1 libeca.so libeca.so.$(VERSION) libeca.a; do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
 
 uninstall-header:
-	if [ -e $(DESTDIR)$(includedir)/bitfield-eca.h ]; then rm -v $(DESTDIR)$(includedir)/bitfield-eca.h; fi
+	if [ -e $(DESTDIR)$(includedir)/eca.h ]; then rm -v $(DESTDIR)$(includedir)/eca.h; fi
 
 uninstall-man:
 	$(MAKE) -C $(MANDIR) uninstall

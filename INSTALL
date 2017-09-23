@@ -1,7 +1,7 @@
 INSTALLATION
 ------------
 
-To compile bitfield-eca from source code:
+To compile eca from source code:
 
 $ autoconf
 $ ./configure --prefix=DIRECTORY

@@ -1,5 +1,5 @@
-bitfield-eca
-============
+eca
+===
 
 Version 0.0.1 (January 7, 2017)
 
@@ -35,22 +35,22 @@ Please see the file called INSTALL.
 Usage
 -----
 
-THe 'bitfield-eca' library is an extension to the 'bitfield' library, so in most cases, functions provided by eca are used along with functions from the core.
+The 'eca' library is an extension to the 'bitfield' library, so in most cases, functions provided by eca are used along with functions from the core.
 If bitfield-eca library files are installed system-wide in standard locations, then one needs to (1) include a system version of the header file to the source
 
-#include <bitfield-eca.h>
+#include <eca.h>
 
-and (2) add the "-lbitfield-eca -lbitfield" flags to compiler instructions
+and (2) add the "-leca -lbitfield" flags to compiler instructions
 
-gcc ... -lbitfield-eca -lbitfield
+gcc ... -leca -lbitfield
 
-Alternatively, if bitfield-eca library is integrated into a project, then one needs to (1) include a local version of the header file to the source
+Alternatively, if eca library is integrated into a project, then one needs to (1) include a local version of the header file to the source
 
-#include "PATH_TO_HEADER/bitfield-eca.h"
+#include "PATH_TO_HEADER/eca.h"
 
-and (2) add the "-lbitfield-eca -lbitfield" flags, along with the path to the header and path to the library to compiler instructions
+and (2) add the "-leca -lbitfield" flags, along with the path to the header and path to the library to compiler instructions
 
-gcc ... -I$(PATH_TO_HEADER) -L$(PATH_TO_LIBRARY) -lbitfield-eca -lbitfield
+gcc ... -I$(PATH_TO_HEADER) -L$(PATH_TO_LIBRARY) -leca -lbitfield
 
 Functions
 ---------

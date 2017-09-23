@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT(bitfield-eca, 1.0.0, vitalie@ciubotaru.tokyo)
+AC_INIT(eca, 1.0.0, vitalie@ciubotaru.tokyo)
 AC_CONFIG_SRCDIR([eca.c])
 AC_CONFIG_HEADERS([config.h])
 
@@ -23,7 +23,7 @@ AC_PROG_MAKE_SET
 
 PKG_PROG_PKG_CONFIG([0.25])
 
-PKG_CHECK_MODULES(libbitfield, libbitfield >= 1.0.0)
+PKG_CHECK_MODULES(bitfield, libbitfield >= 1.0.0)
 
 # Checks for header files.
 AC_CHECK_HEADERS(limits.h stdlib.h string.h bitfield.h)

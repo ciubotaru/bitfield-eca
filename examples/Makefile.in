@@ -4,7 +4,7 @@ LIBS=-L.. -I..
 all: build-examples run-examples
 build-examples: $(EXAMPLES)
 $(EXAMPLES): %: %.c
-	$(CC) $(CFLAGS) -Wl,-rpath=$(CURDIR) -o $@ $< $(LIBS) -lbitfield-eca -lbitfield
+	$(CC) $(CFLAGS) -Wl,-rpath=$(CURDIR) -o $@ $< $(LIBS) -leca -lbitfield
 
 run-examples:
 	for i in $(EXAMPLES); do \

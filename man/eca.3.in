@@ -3,7 +3,7 @@
 eca_string, eca_string_ip, eca_ring, eca_ring_ip \- transform an array of bits as an elementary cellular automaton given by "Wolfram's code".
 .SH SYNOPSIS
 .nf
-.B "#include <bitfield-eca.h>
+.B "#include <eca.h>
 .sp
 .BI "struct bitfield *eca_string(const struct bitfield *"input ", const unsigned int "wolfram_code ");
 .BI "void eca_string_ip(struct bitfield *"instance ", const unsigned int "wolfram_code ");

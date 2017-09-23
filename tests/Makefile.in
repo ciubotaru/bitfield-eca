@@ -4,7 +4,7 @@ all: build-tests run-tests
 
 build-tests: $(TESTFILES)
 $(TESTFILES): %: %.c
-	$(CC) $(CFLAGS) -Wl,-rpath=$(CURDIR) -o $@ $< -L.. -I.. -lbitfield-eca -lbitfield
+	$(CC) $(CFLAGS) -Wl,-rpath=$(CURDIR) -o $@ $< -L.. -I.. -leca -lbitfield
 
 run-tests: $(TESTFILES)
 	for i in $(TESTFILES); do \
