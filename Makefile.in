@@ -48,7 +48,7 @@ examples: example
 example:
 	$(MAKE) -C $(EXAMPLEDIR)
 
-install: install-lib install-header install-man
+install: install-lib install-header install-man install-pc
 
 install-lib:
 	mkdir -p $(DESTDIR)$(libdir)
@@ -69,7 +69,7 @@ install-pc: libeca.pc
 	install -d $(DESTDIR)$(libdir)/pkgconfig
 	install -m 0644 $< $(DESTDIR)$(libdir)/pkgconfig
 
-uninstall: uninstall-lib uninstall-header uninstall-man
+uninstall: uninstall-lib uninstall-header uninstall-man uninstall-pc
 
 uninstall-lib:
 	for i in libeca.so.1 libeca.so libeca.so.$(VERSION) libeca.a; do if [ -e $(DESTDIR)$(libdir)/$$i ]; then rm -v $(DESTDIR)$(libdir)/$$i; fi; done
