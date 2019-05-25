@@ -8,8 +8,9 @@
  * Copyright 2017
 **/
 
-#include "stdlib.h"
+#include <stdlib.h>
 #include "eca.h"
+#include "eca-internals.h"
 
 inline static struct bitfield *eca_0(const struct bitfield *left,
 				     const struct bitfield *center,
@@ -3652,4 +3653,97 @@ struct bitfield *eca_ring(const struct bitfield *input,
 	bfdel(left);
 	bfdel(right);
 	return output;
+}
+
+inline struct bitmatrix *bminit() {
+	struct bitmatrix *instance = malloc(sizeof(struct bitmatrix));
+	if (!instance) return NULL;
+	instance->matrix = NULL;
+	instance->rows = 0;
+	instance->cols = 0;
+	return instance;
+}
+
+struct bitmatrix *bmnew(const unsigned int rows, const unsigned int cols) {
+	struct bitmatrix *instance = bminit();
+	if (!instance) return NULL;
+	if (rows > 0) {
+		instance->matrix = malloc(sizeof(struct bitfield *) * rows);
+		if (!instance->matrix) goto err;
+		if (cols > 0) {
+			int i;
+			for (i = 0; i < rows; i++) {
+				instance->matrix[i] = calloc(1, BITNSLOTS(cols) * sizeof(unsigned long));
+				if (!instance->matrix[i]) goto err;
+			}
+			instance->cols = cols;
+		}
+		instance->rows = rows;
+	}
+	return instance;
+err:
+	if (instance->matrix) {
+		int i;
+		for (i = 0; i < instance->rows; i++) {
+			if (instance->matrix[i]) free(instance->matrix[i]);
+		}
+		free(instance->matrix);
+	}
+	free(instance);
+	return NULL;
+}
+
+//void bf2append(struct bitmatrix *instance, struct bitfield *new) {
+int bmaddrow(struct bitmatrix *instance, struct bitfield *addition) {
+	if (!instance || !addition) return 1;
+	unsigned long **tmp = realloc(instance->matrix, (instance->rows + 1) * sizeof(unsigned long *));
+	if (!tmp) return 1;
+	instance->matrix = tmp;
+	instance->matrix[instance->rows] = bf2long(addition);
+/**
+	if (BITNSLOTS(bfsize(addition)) != BITNSLOTS(instance->cols)) {
+		unsigned long *tmp2 = realloc(instance->matrix[instance->rows], BITNSLOTS(instance->cols));
+		if (!tmp2) return 1;
+		instance->matrix[instance->rows] = tmp2;
+	}
+**/
+	instance->rows++;
+	return 0;
+}
+
+//void bf2remove(struct bitmatrix *instance, const unsigned int nr) {
+int bmdelrow(struct bitmatrix *instance, const unsigned int row_nr) {
+	if (row_nr >= instance->rows) return 1;
+	free(instance->matrix[row_nr]);
+	int i;
+	for (i = row_nr; i < instance->rows - 1; i++) instance->matrix[i] = instance->matrix[i + 1];
+	unsigned long **tmp = realloc(instance->matrix,  (instance->rows - 1) * sizeof(unsigned long *));
+	if (!tmp) return 1;
+	instance->matrix = tmp;
+	instance->rows--;
+	return 0;
+}
+
+void bmdel(struct bitmatrix *instance) {
+	if (!instance) return;
+	if (instance->matrix) {
+		if (instance->rows > 0) {
+			int i;
+			for (i = 0; i < instance->rows; i++) {
+				if (instance->matrix[i]) free(instance->matrix[i]);
+			}
+		}
+		free(instance->matrix);
+	}
+	free(instance);
+}
+
+unsigned int bmrows(const struct bitmatrix *instance) {
+	if (!instance) return 0;
+	return instance->rows;
+}
+
+unsigned int bmcols(const struct bitmatrix *instance) {
+	if (!instance) return 0;
+	return instance->cols;
 }
