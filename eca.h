@@ -34,4 +34,6 @@ unsigned int bmrows(const struct bitmatrix *instance);
 
 unsigned int bmcols(const struct bitmatrix *instance);
 
+struct bitmatrix *eca_rev_bit(const unsigned int bit, const unsigned int wolfram_code);
+
 #endif
