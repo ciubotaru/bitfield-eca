@@ -3670,13 +3670,18 @@ struct bitmatrix *bmnew(const unsigned int rows, const unsigned int cols) {
 	if (rows > 0) {
 		instance->matrix = malloc(sizeof(struct bitfield *) * rows);
 		if (!instance->matrix) goto err;
+		int i;
 		if (cols > 0) {
-			int i;
 			for (i = 0; i < rows; i++) {
 				instance->matrix[i] = calloc(1, BITNSLOTS(cols) * sizeof(unsigned long));
 				if (!instance->matrix[i]) goto err;
 			}
 			instance->cols = cols;
+		}
+		else {
+			for (i = 0; i < rows; i++) {
+				instance->matrix[i] = NULL;
+			}
 		}
 		instance->rows = rows;
 	}
@@ -3693,7 +3698,6 @@ err:
 	return NULL;
 }
 
-//void bf2append(struct bitmatrix *instance, struct bitfield *new) {
 int bmaddrow(struct bitmatrix *instance, struct bitfield *addition) {
 	if (!instance || !addition) return 1;
 	unsigned long **tmp = realloc(instance->matrix, (instance->rows + 1) * sizeof(unsigned long *));
@@ -3711,7 +3715,6 @@ int bmaddrow(struct bitmatrix *instance, struct bitfield *addition) {
 	return 0;
 }
 
-//void bf2remove(struct bitmatrix *instance, const unsigned int nr) {
 int bmdelrow(struct bitmatrix *instance, const unsigned int row_nr) {
 	if (row_nr >= instance->rows) return 1;
 	free(instance->matrix[row_nr]);

@@ -29,6 +29,7 @@ int main()
 	for (i = 0; i < dots; i++)
 		printf(".");
 
+	int retval = 0;
 	struct bitmatrix *input = bmnew(len, len / 2);
 	if (!input) {
 		printf("%s\n", failed);
@@ -53,24 +54,41 @@ int main()
 		}
 		size = bmrows(input);
 		if (create) {
-			/** try to append a null bitfield to a real set -- should not work **/
-			bmaddrow(input, tmp2);
-			if (bmrows(input) != size) {
+			/* append a null bitfield, should fail */
+			retval = bmaddrow(input, tmp2);
+			if (retval != 1 || bmrows(input) != size) {
 				printf("%s\n", failed);
 				return 1;
 			}
-
 			tmp = bfnew(len);
-			bmaddrow(input, tmp);
-			if (bmrows(input) != size + 1) {
+			/* append a real bitfield to a null bitmatrix, should fail */
+			retval = bmaddrow(NULL, tmp);
+			if (retval != 1) {
+				printf("%s\n", failed);
+				return 1;
+			}
+			retval = bmaddrow(input, tmp);
+			if (retval != 0 || bmrows(input) != size + 1) {
 				printf("%s\n", failed);
 				return 1;
 			}
 			bfdel(tmp);
 		}
 		else {
-			bmdelrow(input, rand() % size);
-			if (bmrows(input) != size - 1) {
+			/* try to delete a row beyond bitmatrix size, should fail */
+			retval = bmdelrow(input, bmrows(input));
+			if (retval != 1) {
+				printf("%s\n", failed);
+				return 1;
+			}
+			/* try to delete a row in a null bitmatrix, should fail */
+			retval = bmdelrow(NULL, 0);
+			if (retval != 1) {
+				printf("%s\n", failed);
+				return 1;
+			}
+			retval = bmdelrow(input, rand() % size);
+			if (retval != 0 || bmrows(input) != size - 1) {
 				printf("%s\n", failed);
 				return 1;
 			}
