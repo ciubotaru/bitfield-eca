@@ -3831,3 +3831,19 @@ struct bitmatrix *eca_rev_string(const struct bitfield *input, const unsigned in
 	}
 	return output;
 }
+
+struct bitmatrix *eca_rev_ring(const struct bitfield *input, const unsigned int wolfram_code) {
+	struct bitmatrix *output = eca_rev_string(input, wolfram_code);
+	if (!output) return NULL;
+	int i;
+	struct bitfield *tmp, *sub1, *sub2;
+	for (i = bmrows(output) - 1; i >= 0; i--) {
+		tmp = bmgetrow(output, i);
+		sub1 = bfsub(tmp, 0, 2);
+		sub2 = bfsub(tmp, bfsize(input), 2);
+		if (bfcmp(sub1, sub2, NULL) != 0) {
+			bmdelrow(output, i);
+		}
+	}
+	return output;
+}
