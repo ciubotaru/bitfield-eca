@@ -3715,6 +3715,13 @@ int bmaddrow(struct bitmatrix *instance, struct bitfield *addition) {
 	return 0;
 }
 
+struct bitfield *bmgetrow(struct bitmatrix *instance, const unsigned int row_nr) {
+	if (!instance) return NULL;
+	if (row_nr >= bmrows(instance)) return NULL;
+	struct bitfield *output = long2bf(instance->matrix[row_nr], instance->cols);
+	return output;
+}
+
 int bmdelrow(struct bitmatrix *instance, const unsigned int row_nr) {
 	if (!instance) return 1;
 	if (row_nr >= instance->rows) return 1;
@@ -3759,6 +3766,7 @@ struct bitmatrix *eca_rev_bit(const unsigned int input, const unsigned int wolfr
 	struct bitmatrix *output;
 	if (input & 1U) {
 		output = bmnew(popcount, 3);
+		if (!output) return NULL;
 		j = 0;
 		for (i = 0; i < 8; i++) {
 			if ((wolfram_code >> i) & 1U) {
@@ -3769,6 +3777,7 @@ struct bitmatrix *eca_rev_bit(const unsigned int input, const unsigned int wolfr
 	}
 	else {
 		output = bmnew(8 - popcount, 3);
+		if (!output) return NULL;
 		j = 0;
 		for (i = 0; i < 8; i++) {
 			if (!((wolfram_code >> i) & 1U)) {

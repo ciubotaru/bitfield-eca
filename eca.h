@@ -26,6 +26,8 @@ struct bitmatrix *bmnew(const unsigned int rows, const unsigned int cols); /* cr
 
 int bmaddrow(struct bitmatrix *instance, struct bitfield *addition);
 
+struct bitfield *bmgetrow(struct bitmatrix *instance, const unsigned int row_nr);
+
 int bmdelrow(struct bitmatrix *instance, const unsigned int row_nr);
 
 void bmdel(struct bitmatrix *instance); /* destroys a bitmatrix structure and frees memory */
