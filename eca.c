@@ -3788,3 +3788,46 @@ struct bitmatrix *eca_rev_bit(const unsigned int input, const unsigned int wolfr
 	}
 	return output;
 }
+
+struct bitmatrix *eca_rev_string(const struct bitfield *input, const unsigned int wolfram_code) {
+	if (!input) return NULL;
+	int bit = bfgetbit(input, 0);
+	struct bitmatrix *output = eca_rev_bit(bit, wolfram_code);
+	if (!output) return NULL;
+	if (bmrows(output) == 0) {
+		output->cols = bfsize(input) + 2;
+		return output;
+	}
+	int i, j, k;
+	struct bitmatrix *tmp, *tmp3;
+	struct bitfield *tmp1, *sub1, *tmp2, *sub2;
+	for (i = 1; i < bfsize(input); i++) {
+		tmp = eca_rev_bit(bfgetbit(input, i), wolfram_code);
+		if (!tmp) return NULL;
+		if (bmrows(tmp) == 0) {
+			bmdel(output);
+			tmp->cols =  bfsize(input) + 2;
+			return tmp;
+		}
+		tmp3 = bmnew(0, bmcols(output));
+		for (j = 0; j < bmrows(output); j++) {
+			for (k = 0; k < bmrows(tmp); k++) {
+				tmp1 = bmgetrow(output, j);
+				sub1 = bfsub(tmp1, i, 2);
+				tmp2 = bmgetrow(tmp, k);
+				sub2 = bfsub(tmp2, 0, 2);
+				if (bfcmp(sub1, sub2, NULL) == 0) {
+					bmaddrow(tmp3, tmp1);
+				}
+				bfdel(tmp1);
+				bfdel(tmp2);
+				bfdel(sub1);
+				bfdel(sub2);
+			}
+		}
+		bmdel(tmp);
+		bmdel(output);
+		output = tmp3;
+	}
+	return output;
+}

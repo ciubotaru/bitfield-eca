@@ -38,4 +38,6 @@ unsigned int bmcols(const struct bitmatrix *instance);
 
 struct bitmatrix *eca_rev_bit(const unsigned int bit, const unsigned int wolfram_code);
 
+struct bitmatrix *eca_rev_string(const struct bitfield *input, const unsigned int wolfram_code);
+
 #endif
